@@ -81,17 +81,19 @@
 
 
 
-<meta name="description" content="1. tabs, pills 1) &amp;lt;ul class=”nav nav-tabs”&amp;gt;, &amp;lt;ul class=”nav, nav-pills”&amp;gt; 2) &amp;lt;li&amp;gt;&amp;lt;a data-toggle=”tab” href=”#p”&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; 3) &amp;lt;div class=”tab-content”&amp;gt;&amp;lt;p id=">
+<meta name="description" content="前端性能优化 标题可能起的有点大，这次是实践是对目前在做的项目的一次性能调优，但是也没有尝试所有方式。 起因是我们的网站被客户吐槽慢。。。 然后开始了性能调优。 gzip实践服务器端的优化是首先想到的方法，因为这个优化的力度是前端code层面优化比不了的。项目是Angular6的，打包之后用–stats-json和webpack-bundle-analyzer可以看到目前打包之后各个js的大小以及">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Bootstrap] - 基础 - 2">
-<meta property="og:url" content="http://yoursite.com/2017/02/20/Bootstrap/Bootstrap - 基础 - 2/index.html">
+<meta property="og:title" content="（回顾）性能调优实践 gzip, brotli, https, angular">
+<meta property="og:url" content="http://yoursite.com/2019/06/28/性能调优实践/index.html">
 <meta property="og:site_name" content="赤晨">
-<meta property="og:description" content="1. tabs, pills 1) &amp;lt;ul class=”nav nav-tabs”&amp;gt;, &amp;lt;ul class=”nav, nav-pills”&amp;gt; 2) &amp;lt;li&amp;gt;&amp;lt;a data-toggle=”tab” href=”#p”&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; 3) &amp;lt;div class=”tab-content”&amp;gt;&amp;lt;p id=">
+<meta property="og:description" content="前端性能优化 标题可能起的有点大，这次是实践是对目前在做的项目的一次性能调优，但是也没有尝试所有方式。 起因是我们的网站被客户吐槽慢。。。 然后开始了性能调优。 gzip实践服务器端的优化是首先想到的方法，因为这个优化的力度是前端code层面优化比不了的。项目是Angular6的，打包之后用–stats-json和webpack-bundle-analyzer可以看到目前打包之后各个js的大小以及">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-27T02:45:08.991Z">
+<meta property="og:image" content="http://on3eu0vfd.bkt.clouddn.com/static/images/performance190627/performance-bootstrap-brotli.png">
+<meta property="og:updated_time" content="2019-06-28T06:17:53.867Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[Bootstrap] - 基础 - 2">
-<meta name="twitter:description" content="1. tabs, pills 1) &amp;lt;ul class=”nav nav-tabs”&amp;gt;, &amp;lt;ul class=”nav, nav-pills”&amp;gt; 2) &amp;lt;li&amp;gt;&amp;lt;a data-toggle=”tab” href=”#p”&amp;gt;&amp;lt;/a&amp;gt;&amp;lt;/li&amp;gt; 3) &amp;lt;div class=”tab-content”&amp;gt;&amp;lt;p id=">
+<meta name="twitter:title" content="（回顾）性能调优实践 gzip, brotli, https, angular">
+<meta name="twitter:description" content="前端性能优化 标题可能起的有点大，这次是实践是对目前在做的项目的一次性能调优，但是也没有尝试所有方式。 起因是我们的网站被客户吐槽慢。。。 然后开始了性能调优。 gzip实践服务器端的优化是首先想到的方法，因为这个优化的力度是前端code层面优化比不了的。项目是Angular6的，打包之后用–stats-json和webpack-bundle-analyzer可以看到目前打包之后各个js的大小以及">
+<meta name="twitter:image" content="http://on3eu0vfd.bkt.clouddn.com/static/images/performance190627/performance-bootstrap-brotli.png">
 
 
 
@@ -121,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/20/Bootstrap/Bootstrap - 基础 - 2/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/28/性能调优实践/">
 
 
 
 
 
-  <title>[Bootstrap] - 基础 - 2 | 赤晨</title>
+  <title>（回顾）性能调优实践 gzip, brotli, https, angular | 赤晨</title>
   
 
 
@@ -254,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/20/Bootstrap/Bootstrap - 基础 - 2/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/性能调优实践/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Arron Lai">
@@ -271,7 +273,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">[Bootstrap] - 基础 - 2</h2>
+          <h2 class="post-title" itemprop="name headline">（回顾）性能调优实践 gzip, brotli, https, angular</h2>
         
 
         <div class="post-meta">
@@ -283,8 +285,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-20T16:40:03+08:00">
-                2017-02-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T14:17:53+08:00">
+                2019-06-28
               </time>
             
 
@@ -293,39 +295,6 @@
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/tech/" itemprop="url" rel="index">
-                    <span itemprop="name">学海无涯我游啊游</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/tech/htmlcss/" itemprop="url" rel="index">
-                    <span itemprop="name">HTML/css（HTML5/css3)</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -359,22 +328,25 @@
       
 
       
-        <p>1. tabs, pills</p>
-<p>1) &lt;ul class=”nav nav-tabs”&gt;, &lt;ul class=”nav, nav-pills”&gt;</p>
-<p>2) &lt;li&gt;&lt;a data-toggle=”tab” href=”#p”&gt;&lt;/a&gt;&lt;/li&gt;</p>
-<p>3) &lt;div class=”tab-content”&gt;&lt;p id=”p” class=”tab-pane”&gt;&lt;/p&gt;&lt;/div&gt;</p>
-<p>2. navbar&nbsp;</p>
-<p>1) &lt;ul class=”nav navbar-default”&gt; navbar-nav/navbar-right</p>
-<p>3. form</p>
-<p>1) .form-inline</p>
-<p>2) .radio-inline .checkbox-inline</p>
-<p>3) .input-group .input-group-addon</p>
-<p>4) .inputlg .inputdefault .inputsm</p>
-<p>4.&nbsp;Carousel</p>
-<p>1) &lt;div id=”c” class=”carousel slide” data-ride=”carousel”&gt; &nbsp;//data-ride -start animation now</p>
-<p>2) &lt;ol class=”carousel-indicator”&gt;&lt;li data-target=”#c” data-slide-to=”0”&gt;&lt;/li&gt;&lt;/ol&gt;</p>
-<p>3) &lt;div class=”carousel-inner”&gt;&lt;div class=”item”&gt;&lt;/div&gt;&lt;/div&gt;</p>
-<p>4) &lt;a class=”left carousel-control” data-target=”#c” role=”button” data-slide=”prev”&gt;&lt;/a&gt;</p>
+        <p>前端性能优化</p>
+<p>标题可能起的有点大，这次是实践是对目前在做的项目的一次性能调优，但是也没有尝试所有方式。</p>
+<p>起因是我们的网站被客户吐槽慢。。。</p>
+<p>然后开始了性能调优。</p>
+<h1 id="gzip实践"><a href="#gzip实践" class="headerlink" title="gzip实践"></a>gzip实践</h1><p>服务器端的优化是首先想到的方法，因为这个优化的力度是前端code层面优化比不了的。项目是Angular6的，打包之后用–stats-json和webpack-bundle-analyzer可以看到目前打包之后各个js的大小以及gzip压缩之后的大小，gzip压一压，最少能小一半，有些能压到十分之一。<br>gzip的原理是在服务器进行配置，对制定类型的文件采用gzip压缩，客户端在获得传输的数据之后再进行解压。通过这个方式可以减少文件传输的时间，但是会增加压缩和解压的时间，所以对于一些很小的文件是不建议启用gzip的（服务器配置的时候也可以设置文件大小）。<br>配置大概是</p>
+<p><code>LoadModule deflate_module modules/mod_deflate.so
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript</code></p>
+<p>在httpd.conf开启mod_deflate，然后选一下文件类型。</p>
+<p>本地build了一个docker测试 =&gt; 快得一批！</p>
+<p>部署到服务器打开网站 =&gt; <strong>没得卵用</strong>！又改了几次配置，部署到服务器上都是一样。</p>
+<p>开始怀疑gzip，开始怀疑服务器，开始怀疑自己。</p>
+<ul>
+<li>问题：本地测试gzip生效，但服务器上相同配置gzip后不生效。</li>
+<li>思路：服务器的机器和本地机器肯定有不同，但是两边最终都是build出来docker image，image内的环境配置和安装的软件都是一样的，搜了“gzip不生效”找到的基本是怎么配置gzip -&gt; 两边不同的还有协议，服务器端proxy设置了强制ssl，所有访问都是https本地是<a href="http://localhost，搜“gzip" target="_blank" rel="noopener">http://localhost，搜“gzip</a> https 不生效”找到答案：因为有BREACH（大致是ssl会对文件加密，以保护文件内容不被他人获取和篡改）但是如果引入gzip，hackers可以通过victim的机器发送大量明文请求和压缩算法(gzip 压缩在 HTTP 中的工作方式是这样：如果在响应中有同一个字符串的多个实例，第一个实例将被保留，而其余实例将被替换成指向第一个实例位置的短引用，以减少响应消息的体积)来破解文件内容。=&gt; SSL和gzip不能同时使用（搜索时候找到了一个关于apache的SSLCompression的配置，进行了尝试，无果）</li>
+</ul>
+<h1 id="Brotli实践"><a href="#Brotli实践" class="headerlink" title="Brotli实践"></a>Brotli实践</h1><ul>
+<li>问题：SSL和gzip不能同时使用，对于我们现有site SSL不能disable =&gt; 无法实现服务器端优化？</li>
+<li>思路：(看看别人是怎么做的）-&gt; bootstrap，load很快，它也是https，接着看了network，<img title="bootstrap_brotli" alt="bootstrap_brotli" src="http://on3eu0vfd.bkt.clouddn.com/static/images/performance190627/performance-bootstrap-brotli.png"></li>
+</ul>
 
       
     </div>
@@ -399,8 +371,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/17/Bootstrap/Bootstrap - 基础 - 1/" rel="next" title="[Bootstrap] - 基础 - 1">
-                <i class="fa fa-chevron-left"></i> [Bootstrap] - 基础 - 1
+              <a href="/2018/11/27/算法/最长回文子串/" rel="next" title="最长回文子串">
+                <i class="fa fa-chevron-left"></i> 最长回文子串
               </a>
             
           </div>
@@ -408,10 +380,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/25/算法/kmp/" rel="prev" title="[算法]- kmp">
-                [算法]- kmp <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -463,8 +431,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -522,6 +499,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gzip实践"><span class="nav-number">1.</span> <span class="nav-text">gzip实践</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Brotli实践"><span class="nav-number">2.</span> <span class="nav-text">Brotli实践</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
